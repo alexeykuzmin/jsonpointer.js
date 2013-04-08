@@ -27,7 +27,7 @@ module.exports = function(grunt) {
         }
       },
 
-      test: ['test/test-*.coffee']
+      test: ['test/test*.coffee']
     },
 
 
@@ -49,7 +49,7 @@ module.exports = function(grunt) {
       },
 
       test: {
-        src: 'test/test-*.js'
+        src: 'test/test*.js'
       }
     }
   });

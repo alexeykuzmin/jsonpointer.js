@@ -1,4 +1,4 @@
 node_modules
 
 # Compiled .js from .coffee
-test/test-*.compiled.js
+test/test*.compiled.js

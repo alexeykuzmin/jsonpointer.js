@@ -1,5 +1,5 @@
 
-jsonPointer = require "../lib/js-json-pointer"
+jsonPointer = require "../lib/jsonPointer"
 chai = require "chai"
 chai.should()
 
