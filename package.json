@@ -1,0 +1,13 @@
+{
+  "name": "js-json-pointer",
+  "description": "JavaScript implementation of JSON Pointer",
+  "author": "Alexey Kuzmin",
+  "version": "0.1.0",
+  "preferGlobal": false,
+  "repository": "git://github.com/alexeykuzmin/js-json-pointer.git",
+  "homepage": "https://github.com/alexeykuzmin/js-json-pointer",
+  "bugs": {
+    "url": "https://github.com/alexeykuzmin/js-json-pointer/issues"
+  },
+  "private": true
+}
