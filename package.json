@@ -18,7 +18,7 @@
     "grunt": "~0.4.1",
     "grunt-contrib-jshint": "~0.4.2",
     "grunt-coffeelint": "0.0.6",
-    "grunt-simple-mocha": "~0.3.2",
+    "grunt-simple-mocha": "git://github.com/yaymukund/grunt-simple-mocha#7d1cb9bfd8580fc5369bd82e288f683bb7ca0d46",
     "grunt-contrib-coffee": "~0.6.6"
   }
 }
