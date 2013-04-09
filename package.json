@@ -4,7 +4,10 @@
   "author": "Alexey Kuzmin",
   "version": "0.1.0",
   "preferGlobal": false,
-  "repository": "git://github.com/alexeykuzmin/js-json-pointer.git",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/alexeykuzmin/js-json-pointer.git"
+  },
   "homepage": "https://github.com/alexeykuzmin/js-json-pointer",
   "bugs": {
     "url": "https://github.com/alexeykuzmin/js-json-pointer/issues"
@@ -20,5 +23,17 @@
     "grunt-coffeelint": "0.0.6",
     "grunt-simple-mocha": "git://github.com/yaymukund/grunt-simple-mocha#7d1cb9bfd8580fc5369bd82e288f683bb7ca0d46",
     "grunt-contrib-coffee": "~0.6.6"
-  }
+  },
+  "readmeFilename": "README.md",
+  "main": "lib/jsonPointer",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+  },
+  "keywords": [
+    "json-pointer",
+    "json"
+  ],
+  "license": "MIT"
 }
