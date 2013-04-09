@@ -39,6 +39,6 @@ describe "jsonPointer", () ->
 
       check = (expression, expected) ->
         actual = jsonPointer.get targetAsString, expression
-        actual.should.deep.equal expected
+        actual.should.be.deep.equal expected
 
       check(expression, expected) for expression, expected of specExamples
