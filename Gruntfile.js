@@ -37,7 +37,7 @@ module.exports = function(grunt) {
       },
 
       gruntfile: 'Gruntfile.js',
-      lib: ['lib/*.js']
+      src: ['src/*.js']
     },
 
 

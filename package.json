@@ -25,7 +25,7 @@
     "grunt-contrib-coffee": "~0.6.6"
   },
   "readmeFilename": "README.md",
-  "main": "lib/jsonPointer",
+  "main": "src/jsonPointer",
   "directories": {
     "test": "test"
   },
