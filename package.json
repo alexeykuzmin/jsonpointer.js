@@ -1,7 +1,9 @@
 {
   "name": "js-json-pointer",
   "description": "JavaScript implementation of JSON Pointer",
-  "author": "Alexey Kuzmin",
+  "author": {
+    "name": "Alexey Kuzmin"
+  },
   "version": "0.1.0",
   "preferGlobal": false,
   "repository": {
