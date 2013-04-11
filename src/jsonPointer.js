@@ -40,6 +40,14 @@
 
 
   /**
+   * Validates non-empty pointer string.
+   * @type {RegExp}
+   * @const
+   */
+  var NON_EMPTY_POINTER_REGEXP = /(\/[^\/]*)+/;
+
+
+  /**
    * Returns |target| object's value pointed by |pointer|, returns undefined
    * if |pointer| points to non-existing value.
    * If |pointer| is not provided returns curried function bound to |target|.
@@ -73,8 +81,19 @@
    * @returns {boolean} Whether pointer is valid.
    */
   function isValidJSONPointer(pointer) {
-    // TODO (alexeykuzmin): Check |pointer|.
-    return true;
+    switch (true) {
+      case !isString(pointer):
+        return false;
+
+      case '' === pointer:
+        return true;
+
+      case NON_EMPTY_POINTER_REGEXP.test(pointer):
+        return true;
+
+      default:
+        return false;
+    }
   }
 
 
@@ -166,6 +185,11 @@
 
   function isNumber(n) {
     return !isNaN(Number(n));
+  }
+
+
+  function isString(s) {
+    return 'string' === typeof s || s instanceof String;
   }
 
 
