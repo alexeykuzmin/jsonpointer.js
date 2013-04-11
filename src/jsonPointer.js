@@ -59,6 +59,9 @@
     if (!isString(target)) {
       throw getError('JSON document must be a string.');
     }
+    if (!isValidJSONPointer(pointer)) {
+      throw getError('Pointer is not valid.');
+    }
     try {
       target = JSON.parse(target);
     }
@@ -66,10 +69,6 @@
       throw getError('JSON document is not valid.');
     }
 
-    var pointerIsValid = isValidJSONPointer(pointer);
-    if (!pointerIsValid) {
-      throw getError('Pointer is not valid.');
-    }
 
     var tokensList = parsePointer(pointer);
     var token;
