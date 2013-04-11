@@ -56,6 +56,14 @@ describe "jsonPointer", () ->
       expect(evaluate(p)).to.be.undefined for p in pointers
 
 
+    it "should throw an error if target is not valid JSON document", () ->
+      invalidTargets = [null, "", [], {}, "invalid", 1, "{o}"]
+      pointer = ""
+
+      evaluate = (target) -> () -> jsonPointer.get target, pointer
+      expect(evaluate(t)).to.throw Error for t in invalidTargets
+
+
     describe "pointer validation", () ->
       target =
         foo: "bar"
