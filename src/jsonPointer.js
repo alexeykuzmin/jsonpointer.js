@@ -137,7 +137,7 @@
    * Throws an exception if any error occurs.
    * @param {*} context Current evaluation context.
    * @param {!string} token Unescaped reference token.
-   * @returns {*} Some value.
+   * @returns {*} Some value of undefined if value if not found.
    */
   function getValue(context, token) {
     // Section 4 of spec.
@@ -162,8 +162,9 @@
       return context[token];
     }
 
-    throw getError(
-        'Unexpected context for evaluation: ' + JSON.stringify(context) + '.');
+    // Context is not an array and is not an object.
+    // Token evaluation is not possible.
+    return;  // undefined
   }
 
 
