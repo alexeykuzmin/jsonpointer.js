@@ -2,6 +2,7 @@
 jsonPointer = require "../src/jsonPointer"
 chai = require "chai"
 chai.should()
+expect = chai.expect
 
 
 describe "jsonPointer", () ->
@@ -42,3 +43,34 @@ describe "jsonPointer", () ->
         actual.should.be.deep.equal expected
 
       check(expression, expected) for expression, expected of specExamples
+
+
+    it "returns undefined if value is not found", () ->
+      target =
+        foo: "bar"
+
+      targetAsString = JSON.stringify target
+
+      actual = jsonPointer.get targetAsString, "/baz/0"
+      expect(actual).to.be.undefined
+
+
+    describe "validates pointer and", () ->
+      target =
+        foo: "bar"
+      targetAsString = JSON.stringify target
+      getTestFunction = (pointer) ->
+        () -> jsonPointer.get targetAsString, pointer
+
+      it "throws an error if pointer is not valid", () ->
+        invalidPointers = ["a", "/01"]
+        testFunctions = invalidPointers.map getTestFunction
+
+        expect(f).to.throw Error for f in testFunctions
+
+
+      it "does not throw an error if pointer is valid", () ->
+        validPointers = ["", "/", "//", "/a", "/0", "/10", "/a/0", "/1/a"]
+        testFunctions = validPointers.map getTestFunction
+
+        expect(f).to.not.throw Error for f in testFunctions
