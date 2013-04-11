@@ -1,0 +1,12 @@
+{
+  "name": "js-json-pointer",
+  "version": "0.1.0",
+  "main": "src/jsonPointer.js",
+  "ignore": [
+    "**/.*",
+    "Gruntfile.js",
+    "package.json",
+    "node_modules",
+    "test/"
+  ]
+}

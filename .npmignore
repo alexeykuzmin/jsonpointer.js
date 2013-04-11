@@ -2,7 +2,7 @@
 .gitignore
 .travis.yml
 .jshintrc
-
+component.json
 Gruntfile.js
 
 node_modules
