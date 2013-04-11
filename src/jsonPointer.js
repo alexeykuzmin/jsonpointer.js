@@ -55,7 +55,16 @@
    * @return {(*|Function)} Some value or function.
    */
   function getPointedValue(target, pointer) {
-    target = JSON.parse(target);
+
+    if (!isString(target)) {
+      throw getError('JSON document must be a string.');
+    }
+    try {
+      target = JSON.parse(target);
+    }
+    catch (e) {
+      throw getError('JSON document is not valid.');
+    }
 
     var pointerIsValid = isValidJSONPointer(pointer);
     if (!pointerIsValid) {
