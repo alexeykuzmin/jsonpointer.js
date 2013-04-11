@@ -51,8 +51,8 @@
    * Returns |target| object's value pointed by |pointer|, returns undefined
    * if |pointer| points to non-existing value.
    * @param {!string} target JSON document.
-   * @param {string=} pointer JSON Pointer string. Optional.
-   * @return {(*|Function)} Some value or function.
+   * @param {!string} pointer JSON Pointer string.
+   * @return {*} Some value.
    */
   function getPointedValue(target, pointer) {
 
