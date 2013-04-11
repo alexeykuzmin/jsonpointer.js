@@ -47,12 +47,13 @@ describe "jsonPointer", () ->
 
     it "returns undefined if value is not found", () ->
       target =
-        foo: "bar"
-
+        foo: "bar",
+        baz: [1, 2, 3]
       targetAsString = JSON.stringify target
+      pointers = ["/oof", "/baz/4", "/foo/bar", "/foo/bar/baz"]
 
-      actual = jsonPointer.get targetAsString, "/baz/0"
-      expect(actual).to.be.undefined
+      evaluate = (pointer) -> jsonPointer.get targetAsString, pointer
+      expect(evaluate(p)).to.be.undefined for p in pointers
 
 
     describe "validates pointer and", () ->
