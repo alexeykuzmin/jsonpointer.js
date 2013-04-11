@@ -45,7 +45,7 @@ describe "jsonPointer", () ->
       check(expression, expected) for expression, expected of specExamples
 
 
-    it "returns undefined if value is not found", () ->
+    it "should return undefined if value is not found", () ->
       target =
         foo: "bar",
         baz: [1, 2, 3]
@@ -56,7 +56,7 @@ describe "jsonPointer", () ->
       expect(evaluate(p)).to.be.undefined for p in pointers
 
 
-    describe "validates pointer and", () ->
+    describe "pointer validation", () ->
       target =
         foo: "bar"
         baz: [1, 2, 3]
@@ -65,14 +65,14 @@ describe "jsonPointer", () ->
       getTestFunction = (pointer) ->
         () -> jsonPointer.get targetAsString, pointer
 
-      it "throws an error if pointer is not valid", () ->
+      it "should throw an error if pointer is not valid", () ->
         invalidPointers = ["a", "/baz/01", "/baz/-", "-"]
         testFunctions = invalidPointers.map getTestFunction
 
         expect(f).to.throw Error for f in testFunctions
 
 
-      it "does not throw an error if pointer is valid", () ->
+      it "should not throw an error if pointer is valid", () ->
         validPointers = ["", "/", "//", "/a", "/0", "/10", "/a/0", "/1/a", "/-"]
         testFunctions = validPointers.map getTestFunction
 
