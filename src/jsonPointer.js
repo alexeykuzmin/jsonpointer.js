@@ -151,6 +151,10 @@
       if (!isNumber(token)) {
         throw getError('Non-number tokens cannot be used in array context.');
       }
+      if (token.length > 1 && '0' === token[0]) {
+        throw getError(
+            'Token with leading zero cannot be used in array context.');
+      }
       return context[token];
     }
 
