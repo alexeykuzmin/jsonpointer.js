@@ -58,19 +58,21 @@ describe "jsonPointer", () ->
     describe "validates pointer and", () ->
       target =
         foo: "bar"
+        baz: [1, 2, 3]
+        "-": "valid"
       targetAsString = JSON.stringify target
       getTestFunction = (pointer) ->
         () -> jsonPointer.get targetAsString, pointer
 
       it "throws an error if pointer is not valid", () ->
-        invalidPointers = ["a", "/01"]
+        invalidPointers = ["a", "/baz/01", "/baz/-", "-"]
         testFunctions = invalidPointers.map getTestFunction
 
         expect(f).to.throw Error for f in testFunctions
 
 
       it "does not throw an error if pointer is valid", () ->
-        validPointers = ["", "/", "//", "/a", "/0", "/10", "/a/0", "/1/a"]
+        validPointers = ["", "/", "//", "/a", "/0", "/10", "/a/0", "/1/a", "/-"]
         testFunctions = validPointers.map getTestFunction
 
         expect(f).to.not.throw Error for f in testFunctions
