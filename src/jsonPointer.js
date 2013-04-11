@@ -32,7 +32,8 @@
 
 
   /**
-   * Returns |target| object's value pointed by |pointer|.
+   * Returns |target| object's value pointed by |pointer|, returns undefined
+   * if |pointer| points to non-existing value.
    * If |pointer| is not provided returns curried function bound to |target|.
    * @param {!string} target JSON document.
    * @param {string=} pointer JSON Pointer string. Optional.
@@ -50,7 +51,7 @@
     var token;
     var value = target;
 
-    while ( 'undefined' !== typeof (token = tokensList.pop()) ) {
+    while (!isUndefined(value) && !isUndefined(token = tokensList.pop())) {
       value = getValue(value, token);
     }
 
@@ -147,6 +148,11 @@
 
   function isNumber(n) {
     return !isNaN(Number(n));
+  }
+
+
+  function isUndefined(v) {
+    return 'undefined' === typeof v;
   }
 
 
