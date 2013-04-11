@@ -50,8 +50,8 @@
   function getPointedValue(target, pointer) {
     target = JSON.parse(target);
 
-    var tokenIsValid = isValidJSONPointer(pointer);
-    if (!tokenIsValid) {
+    var pointerIsValid = isValidJSONPointer(pointer);
+    if (!pointerIsValid) {
       throw getError('Pointer is not valid.');
     }
 
