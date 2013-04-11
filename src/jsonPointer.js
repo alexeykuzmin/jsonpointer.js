@@ -50,7 +50,6 @@
   /**
    * Returns |target| object's value pointed by |pointer|, returns undefined
    * if |pointer| points to non-existing value.
-   * If |pointer| is not provided returns curried function bound to |target|.
    * @param {!string} target JSON document.
    * @param {string=} pointer JSON Pointer string. Optional.
    * @return {(*|Function)} Some value or function.
