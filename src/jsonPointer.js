@@ -153,7 +153,7 @@
 
     if (isArray(context)) {
       if ('-' === token) {
-        throw getError('Implementation does not support "-" token.');
+        throw getError('Implementation does not support "-" token for arrays.');
       }
       if (!isNumber(token)) {
         throw getError('Non-number tokens cannot be used in array context.');
