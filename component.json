@@ -1,7 +1,7 @@
 {
-  "name": "js-json-pointer",
+  "name": "jsonpointer.js",
   "version": "0.1.0",
-  "main": "src/jsonPointer.js",
+  "main": "src/jsonpointer.js",
   "ignore": [
     "**/.*",
     "Gruntfile.js",

@@ -229,21 +229,21 @@
 
   // Expose API
 
-  var jsonPointer = {
+  var jsonpointer = {
     get: getPointedValue
   };
 
   if ('object' === typeof exports) {
     // Node.js
-    module.exports = jsonPointer;
+    module.exports = jsonpointer;
   } else if ('function' === typeof define && define.amd) {
     // AMD
     define(function() {
-      return jsonPointer;
+      return jsonpointer;
     });
   } else {
     // Browser
-    this.jsonPointer = jsonPointer;
+    this.jsonpointer = jsonpointer;
   }
 
 }).call((function() {

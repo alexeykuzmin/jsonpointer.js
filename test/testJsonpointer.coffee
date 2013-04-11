@@ -1,11 +1,11 @@
 
-jsonPointer = require "../src/jsonPointer"
+jsonpointer = require "../src/jsonpointer"
 chai = require "chai"
 chai.should()
 expect = chai.expect
 
 
-describe "jsonPointer", () ->
+describe "jsonpointer", () ->
 
   describe "#get", () ->
 
@@ -39,7 +39,7 @@ describe "jsonPointer", () ->
         "/m~0n": 8
 
       check = (expression, expected) ->
-        actual = jsonPointer.get targetAsString, expression
+        actual = jsonpointer.get targetAsString, expression
         actual.should.be.deep.equal expected
 
       check(expression, expected) for expression, expected of specExamples
@@ -52,7 +52,7 @@ describe "jsonPointer", () ->
       targetAsString = JSON.stringify target
       pointers = ["/oof", "/baz/4", "/foo/bar", "/foo/bar/baz"]
 
-      evaluate = (pointer) -> jsonPointer.get targetAsString, pointer
+      evaluate = (pointer) -> jsonpointer.get targetAsString, pointer
       expect(evaluate(p)).to.be.undefined for p in pointers
 
 
@@ -60,7 +60,7 @@ describe "jsonPointer", () ->
       invalidTargets = [null, "", [], {}, "invalid", 1, "{o}"]
       pointer = ""
 
-      evaluate = (target) -> () -> jsonPointer.get target, pointer
+      evaluate = (target) -> () -> jsonpointer.get target, pointer
       expect(evaluate(t)).to.throw Error for t in invalidTargets
 
 
@@ -71,7 +71,7 @@ describe "jsonPointer", () ->
         "-": "valid"
       targetAsString = JSON.stringify target
       getTestFunction = (pointer) ->
-        () -> jsonPointer.get targetAsString, pointer
+        () -> jsonpointer.get targetAsString, pointer
 
       it "should throw an error if pointer is not valid", () ->
         invalidPointers = ["a", "/baz/01", "/baz/-", "-"]

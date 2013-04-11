@@ -1,5 +1,5 @@
 {
-  "name": "js-json-pointer",
+  "name": "jsonpointer.js",
   "description": "JavaScript implementation of JSON Pointer",
   "author": {
     "name": "Alexey Kuzmin"
