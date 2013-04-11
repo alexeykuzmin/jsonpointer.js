@@ -32,6 +32,14 @@
 
 
   /**
+   * Prefix for error messages.
+   * @type {string}
+   * @const
+   */
+  var ERROR_MESSAGE_PREFIX = 'JSON Pointer: ';
+
+
+  /**
    * Returns |target| object's value pointed by |pointer|, returns undefined
    * if |pointer| points to non-existing value.
    * If |pointer| is not provided returns curried function bound to |target|.
@@ -44,7 +52,7 @@
 
     var tokenIsValid = isValidJSONPointer(pointer);
     if (!tokenIsValid) {
-      throw new Error('JSON Pointer is not valid.');
+      throw getError('Pointer is not valid.');
     }
 
     var tokensList = parsePointer(pointer);
@@ -119,10 +127,10 @@
 
     if (isArray(context)) {
       if ('-' === token) {
-        throw new Error('Implementation does not support "-" token.');
+        throw getError('Implementation does not support "-" token.');
       }
       if (!isNumber(token)) {
-        throw new Error('Non-number tokens cannot be used in array context.');
+        throw getError('Non-number tokens cannot be used in array context.');
       }
       return context[token];
     }
@@ -131,8 +139,18 @@
       return context[token];
     }
 
-    throw new Error(
+    throw getError(
         'Unexpected context for evaluation: ' + JSON.stringify(context) + '.');
+  }
+
+
+  /**
+   * Returns Error instance for throwing.
+   * @param {string} message Error message.
+   * @returns {Error}
+   */
+  function getError(message) {
+    return new Error(ERROR_MESSAGE_PREFIX + message);
   }
 
 
