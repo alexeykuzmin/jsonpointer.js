@@ -48,6 +48,24 @@
 
 
   /**
+   * List of error messages.
+   * Please keep it in alphabetical order.
+   * @enum {string}
+   */
+  var ErrorMessage = {
+    HYPHEN_IS_NOT_SUPPORTED_IN_ARRAY_CONTEXT:
+        'Implementation does not support "-" token for arrays.',
+    INVALID_DOCUMENT: 'JSON document is not valid.',
+    INVALID_DOCUMENT_TYPE: 'JSON document must be a string.',
+    INVALID_POINTER: 'Pointer is not valid.',
+    NON_NUMBER_TOKEN_IN_ARRAY_CONTEXT:
+        'Non-number tokens cannot be used in array context.',
+    TOKEN_WITH_LEADING_ZERO_IN_ARRAY_CONTEXT:
+        'Token with leading zero cannot be used in array context.'
+  };
+
+
+  /**
    * Returns |target| object's value pointed by |pointer|, returns undefined
    * if |pointer| points to non-existing value.
    * @param {!string} target JSON document.
@@ -57,16 +75,16 @@
   function getPointedValue(target, pointer) {
 
     if (!isString(target)) {
-      throw getError('JSON document must be a string.');
+      throw getError(ErrorMessage.INVALID_DOCUMENT_TYPE);
     }
     if (!isValidJSONPointer(pointer)) {
-      throw getError('Pointer is not valid.');
+      throw getError(ErrorMessage.INVALID_POINTER);
     }
     try {
       target = JSON.parse(target);
     }
     catch (e) {
-      throw getError('JSON document is not valid.');
+      throw getError(ErrorMessage.INVALID_DOCUMENT);
     }
 
 
@@ -153,14 +171,13 @@
 
     if (isArray(context)) {
       if ('-' === token) {
-        throw getError('Implementation does not support "-" token for arrays.');
+        throw getError(ErrorMessage.HYPHEN_IS_NOT_SUPPORTED_IN_ARRAY_CONTEXT);
       }
       if (!isNumber(token)) {
-        throw getError('Non-number tokens cannot be used in array context.');
+        throw getError(ErrorMessage.NON_NUMBER_TOKEN_IN_ARRAY_CONTEXT);
       }
       if (token.length > 1 && '0' === token[0]) {
-        throw getError(
-            'Token with leading zero cannot be used in array context.');
+        throw getError(ErrorMessage.TOKEN_WITH_LEADING_ZERO_IN_ARRAY_CONTEXT);
       }
       return context[token];
     }
