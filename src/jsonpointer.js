@@ -70,7 +70,7 @@
    * if |pointer| points to non-existing value.
    * @param {!string} target JSON document.
    * @param {!string} pointer JSON Pointer string.
-   * @return {*} Some value.
+   * @returns {*} Some value.
    */
   function getPointedValue(target, pointer) {
 
@@ -162,7 +162,7 @@
    * Throws an exception if any error occurs.
    * @param {*} context Current evaluation context.
    * @param {!string} token Unescaped reference token.
-   * @returns {*} Some value of undefined if value if not found.
+   * @returns {*} Some value or undefined if value if not found.
    */
   function getValue(context, token) {
     // Section 4 of spec.
