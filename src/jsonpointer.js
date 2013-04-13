@@ -287,7 +287,7 @@
     // We are supposed to act as Node.js package.
     module.exports = jsonpointer;
   } else if ('function' === typeof define && define.amd) {
-    // If there is global function `define()` and define.amd is `true`,
+    // If there is global function `define()` and `define.amd` is `true`,
     // we are supposed to act as AMD module.
     define(function() {
       return jsonpointer;
