@@ -31,8 +31,7 @@
   "directories": {
     "test": "test"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "keywords": [
     "json-pointer",
     "json"
