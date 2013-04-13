@@ -73,29 +73,45 @@
    * @returns {*} Some value.
    */
   function getPointedValue(target, pointer) {
+    // .get() method implementation.
 
+    // Let's check type of first argument, it must be a string.
     if (!isString(target)) {
+      // If it's not a string, an exception will be thrown.
       throw getError(ErrorMessage.INVALID_DOCUMENT_TYPE);
     }
+
+    // Second argument must a valid JSON pointer string.
     if (!isValidJSONPointer(pointer)) {
+      // If it's not, an exception will be thrown.
       throw getError(ErrorMessage.INVALID_POINTER);
     }
+
+    // Last check. Target document must be valid JSON document.
     try {
+      // Let's try to parse it as JSON.
       target = JSON.parse(target);
     }
     catch (e) {
+      // If parsing failed, an exception will be thrown.
       throw getError(ErrorMessage.INVALID_DOCUMENT);
     }
 
-
+    // Now, when all arguments are valid, we can start evaluation.
+    // First of all, let's convert JSON pointer string to tokens list.
     var tokensList = parsePointer(pointer);
     var token;
     var value = target;
 
+    // Evaluation will be continued till tokens list is not empty
+    // and returned value is not an undefined.
     while (!isUndefined(value) && !isUndefined(token = tokensList.pop())) {
+      // Let's evaluate token in current context.
+      // `getValue()` might throw an exception, but we won't handle it.
       value = getValue(value, token);
     }
 
+    // Pointer evaluation is done, return resulting value.
     return value;
   }
 
@@ -106,14 +122,20 @@
    * @returns {boolean} Whether pointer is valid.
    */
   function isValidJSONPointer(pointer) {
+    // Validates JSON pointer string.
+
     switch (true) {
       case !isString(pointer):
+        // If it's not a string, it obviously is not valid.
         return false;
 
       case '' === pointer:
+        // If it is string and is an empty string, it's valid.
         return true;
 
       case NON_EMPTY_POINTER_REGEXP.test(pointer):
+        // If it is non-empty string, it must match spec requirements.
+        // Check Section 3 of specification for concrete syntax.
         return true;
 
       default:
@@ -129,8 +151,17 @@
    * @returns {Array} List of tokens.
    */
   function parsePointer(pointer) {
+    // Converts JSON pointer string into tokens list.
+
+    // Let's split pointer string by tokens' separator character.
+    // Also we will reverse resulting array to simplify it's further usage.
     var tokens = pointer.split(TOKENS_SEPARATOR).reverse();
-    tokens.pop();  // Last item is always an empty string in any valid pointer.
+
+    // Last item in resulting array is always an empty string,
+    // we don't need it, let's remove it.
+    tokens.pop();
+
+    // Now tokens' array is ready to use, let's return it.
     return tokens;
   }
 
@@ -141,11 +172,14 @@
    * @returns {string} Unescaped reference token.
    */
   function unescapeReferenceToken(rawReferenceToken) {
+    // Unescapes reference token. See Section 3 of specification.
+
     var referenceToken = rawReferenceToken;
     var character;
     var escapeSequence;
     var replaceRegExp;
 
+    // Each escape sequence has to be unescaped.
     SPECIAL_CHARACTERS.forEach(function(pair) {
       character = pair[0];
       escapeSequence = pair[1];
@@ -165,30 +199,47 @@
    * @returns {*} Some value or undefined if value if not found.
    */
   function getValue(context, token) {
-    // Section 4 of spec.
+    // Reference token evaluation. See Section 4 of spec.
 
+    // First of all we should unescape all special characters in token.
     token = unescapeReferenceToken(token);
 
+    // Further actions depend of context of evaluation.
+
     if (isArray(context)) {
+      // In array context there are more strict requirements
+      // for token value.
+
       if ('-' === token) {
+        // Token cannot be a "-" character,
+        // it has no sense in current implementation.
         throw getError(ErrorMessage.HYPHEN_IS_NOT_SUPPORTED_IN_ARRAY_CONTEXT);
       }
       if (!isNumber(token)) {
+        // Token cannot be non-number.
         throw getError(ErrorMessage.NON_NUMBER_TOKEN_IN_ARRAY_CONTEXT);
       }
       if (token.length > 1 && '0' === token[0]) {
+        // Token cannot be non-zero number with leading zero.
         throw getError(ErrorMessage.TOKEN_WITH_LEADING_ZERO_IN_ARRAY_CONTEXT);
       }
+      // If all conditions are met, simply return element
+      // with token's value index.
+      // It might be undefined, but it's ok.
       return context[token];
     }
 
     if (isObject(context)) {
+      // In object context we can simply return element w/ key equal to token.
+      // It might be undefined, but it's ok.
       return context[token];
     }
 
-    // Context is not an array and is not an object.
-    // Token evaluation is not possible.
-    return;  // undefined
+    // Context might be not an array nor an object,
+    // token evaluation is not possible.
+    // It's expected situation and so we won't throw an error,
+    // undefined value is perfectly suitable here.
+    return;
   }
 
 
@@ -227,22 +278,25 @@
   }
 
 
-  // Expose API
+  // Let's expose API to the world.
 
   var jsonpointer = {
     get: getPointedValue
   };
 
   if ('object' === typeof exports) {
-    // Node.js
+    // If `exports` is an object, we are in Node.js context.
+    // We are supposed to act as Node.js package.
     module.exports = jsonpointer;
   } else if ('function' === typeof define && define.amd) {
-    // AMD
+    // If there is global function `define()` and define.amd is `true`,
+    // we are supposed to act as AMD module.
     define(function() {
       return jsonpointer;
     });
   } else {
-    // Browser
+    // Last resort.
+    // Let's create global `jsonpointer` object.
     this.jsonpointer = jsonpointer;
   }
 
