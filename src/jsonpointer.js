@@ -231,7 +231,7 @@
       return context[token];
     }
 
-    // Context might be not an array nor an object,
+    // If context is not an array nor an object,
     // token evaluation is not possible.
     // It's expected situation and so we won't throw an error,
     // undefined value is perfectly suitable here.
