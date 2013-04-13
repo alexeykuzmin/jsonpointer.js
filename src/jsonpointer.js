@@ -175,7 +175,9 @@
     var escapeSequence;
     var replaceRegExp;
 
-    // Each escape sequence has to be unescaped.
+    // Escape sequences have to be unescaped in specific order,
+    // that's why I have used array, although hash seems more suitable
+    // at first glance.
     SPECIAL_CHARACTERS.forEach(function(pair) {
       character = pair[0];
       escapeSequence = pair[1];
