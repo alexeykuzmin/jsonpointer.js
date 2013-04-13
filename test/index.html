@@ -1,0 +1,29 @@
+<html>
+<head>
+    <title>jsonpointer.js tests</title>
+
+    <!-- Mocha -->
+    <script type="text/javascript"
+            src="../node_modules/mocha/mocha.js"></script>
+    <script type="text/javascript">
+        mocha.setup('bdd');
+    </script>
+    <link rel="stylesheet" href="../node_modules/mocha/mocha.css"/>
+
+    <!-- Chai -->
+    <script type="text/javascript" src="../node_modules/chai/chai.js"></script>
+
+    <!-- JSON Pointer -->
+    <script type="text/javascript" src="../src/jsonpointer.js"></script>
+
+    <!-- JSON Pointer tests -->
+    <!-- XXX (alexeykuzmin): Compile tests from .coffee via `grunt coffee`. -->
+    <script type="text/javascript" src="testJsonpointer.compiled.js"></script>
+</head>
+<body>
+<div id="mocha"></div>
+<script type="text/javascript">
+    mocha.run();
+</script>
+</body>
+</html>

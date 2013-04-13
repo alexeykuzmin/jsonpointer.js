@@ -1,6 +1,7 @@
 
-jsonpointer = require "../src/jsonpointer"
-chai = require "chai"
+global = if typeof window isnt 'undefined' then window else this
+jsonpointer = global.jsonpointer || require "../src/jsonpointer"
+chai = global.chai || require "chai"
 chai.should()
 expect = chai.expect
 

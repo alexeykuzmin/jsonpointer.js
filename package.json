@@ -23,7 +23,8 @@
     "grunt-contrib-jshint": "~0.4.2",
     "grunt-coffeelint": "0.0.6",
     "grunt-simple-mocha": "~0.4.0",
-    "grunt-contrib-coffee": "~0.6.6"
+    "grunt-contrib-coffee": "~0.6.6",
+    "mocha": "~1.9.0"
   },
   "readmeFilename": "README.md",
   "main": "src/jsonpointer",
