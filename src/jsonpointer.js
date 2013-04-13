@@ -118,29 +118,25 @@
 
   /**
    * Returns true if given |pointer| is valid, returns false otherwise.
-   * @param {string} pointer
+   * @param {!string} pointer
    * @returns {boolean} Whether pointer is valid.
    */
   function isValidJSONPointer(pointer) {
     // Validates JSON pointer string.
 
-    switch (true) {
-      case !isString(pointer):
-        // If it's not a string, it obviously is not valid.
-        return false;
-
-      case '' === pointer:
-        // If it is string and is an empty string, it's valid.
-        return true;
-
-      case NON_EMPTY_POINTER_REGEXP.test(pointer):
-        // If it is non-empty string, it must match spec requirements.
-        // Check Section 3 of specification for concrete syntax.
-        return true;
-
-      default:
-        return false;
+    if (!isString(pointer)) {
+      // If it's not a string, it obviously is not valid.
+      return false;
     }
+
+    if ('' === pointer) {
+      // If it is string and is an empty string, it's valid.
+      return true;
+    }
+
+    // If it is non-empty string, it must match spec defined format.
+    // Check Section 3 of specification for concrete syntax.
+    return NON_EMPTY_POINTER_REGEXP.test(pointer);
   }
 
 
