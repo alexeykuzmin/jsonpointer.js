@@ -8,11 +8,11 @@
   "preferGlobal": false,
   "repository": {
     "type": "git",
-    "url": "git://github.com/alexeykuzmin/js-json-pointer.git"
+    "url": "git://github.com/alexeykuzmin/jsonpointer.js.git"
   },
-  "homepage": "https://github.com/alexeykuzmin/js-json-pointer",
+  "homepage": "https://github.com/alexeykuzmin/jsonpointer.js",
   "bugs": {
-    "url": "https://github.com/alexeykuzmin/js-json-pointer/issues"
+    "url": "https://github.com/alexeykuzmin/jsonpointer.js/issues"
   },
   "scripts": {
     "test": "grunt test"
@@ -26,7 +26,7 @@
     "grunt-contrib-coffee": "~0.6.6"
   },
   "readmeFilename": "README.md",
-  "main": "src/jsonPointer",
+  "main": "src/jsonpointer",
   "directories": {
     "test": "test"
   },
