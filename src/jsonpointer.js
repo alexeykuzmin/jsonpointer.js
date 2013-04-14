@@ -300,5 +300,5 @@
 
 }).call((function() {
   'use strict';
-  return this || (typeof window !== 'undefined' ? window : global);
+  return (typeof window !== 'undefined' ? window : global);
 })());
