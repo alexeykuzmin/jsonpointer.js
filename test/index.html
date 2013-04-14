@@ -1,6 +1,7 @@
 <html>
 <head>
     <title>jsonpointer.js tests</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
     <!-- Mocha -->
     <script type="text/javascript"
@@ -23,7 +24,12 @@
 <body>
 <div id="mocha"></div>
 <script type="text/javascript">
-    mocha.run();
+    if (window.mochaPhantomJS) {
+        mochaPhantomJS.run();
+    }
+    else {
+        mocha.run();
+    }
 </script>
 </body>
 </html>
