@@ -45,7 +45,7 @@ module.exports = function(grunt) {
       options: {
         ignoreLeaks: false,
         ui: 'bdd',
-        reporter: 'dot'
+        reporter: 'spec'
       },
 
       test: {
