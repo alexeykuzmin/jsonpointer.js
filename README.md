@@ -1,4 +1,4 @@
-## JavaScript JSON Pointer
+# JavaScript JSON Pointer
 
 [![Build Status](https://travis-ci.org/alexeykuzmin/jsonpointer.js.png)](https://travis-ci.org/alexeykuzmin/jsonpointer.js)
 
@@ -21,6 +21,7 @@ or copy `src/jsonpointer.js` file from repo.
 
 ## Usage examples
 
+### jsonpointer.get
 ```js
 var jsonpointer = require('jsonpointer.js');  // Note that '.js' is a part of module name
 // Available as window.jsonpointer if included via <script/> tag.
