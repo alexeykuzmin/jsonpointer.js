@@ -66,7 +66,7 @@ jsonpointer.get(targetJSON, "/baz/2");  // undefined
 
 `jsonpointer#get` throws an exception in following cases:
 
- - first argument is not valid JSON string
- - seconds argument is not valid JSON Pointer string
- - unacceptable token met during evaluation (check [section 4 of spec](http://tools.ietf.org/html/rfc6901#section-4) for examples)
- - "-" token used in JSON Pointer string and it`s going to be evaluated in Array context
+ - First argument is not valid JSON string.
+ - Seconds argument is not valid JSON Pointer string.
+ - Unacceptable token met during evaluation (check [section 4 of spec](http://tools.ietf.org/html/rfc6901#section-4) for examples).
+ - "-" token used in JSON Pointer string and it`s going to be evaluated in Array context.
