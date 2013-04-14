@@ -2,7 +2,8 @@
   "name": "jsonpointer.js",
   "description": "JavaScript implementation of JSON Pointer",
   "author": {
-    "name": "Alexey Kuzmin"
+    "name": "Alexey Kuzmin",
+    "email": "alex.s.kuzmin@gmail.com"
   },
   "version": "0.1.2",
   "preferGlobal": false,
