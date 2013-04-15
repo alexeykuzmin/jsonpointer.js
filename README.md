@@ -26,7 +26,7 @@ var jsonpoiner = require('jsonpointer.js');  // XXX: '.js' is part of package na
 console.log(typeof jsonpointer);  // "object"
 ```
 
-###AMD
+###[AMD](https://github.com/amdjs/amdjs-api/wiki/AMD)
 ```js
 require('jsonpointer', function(jsonpointer) {
   console.log(typeof jsonpointer);  // "object"    
