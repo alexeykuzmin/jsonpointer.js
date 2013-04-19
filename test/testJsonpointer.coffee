@@ -65,6 +65,38 @@ describe "jsonpointer", () ->
       expect(evaluate(t)).to.throw Error for t in invalidTargets
 
 
+    describe "call w/o second argument", () ->
+
+      it "should return function if first argument is valid JSON", () ->
+        validJSON = "null"
+
+        actual = jsonpointer.get validJSON
+        actual.should.to.be.a "function"
+
+
+      it "should throw an exception if first argument is not JSON", () ->
+        invalidJSON = "invalid"
+        curryGet = (json) -> () -> jsonpointer.get json
+
+        expect(curryGet(invalidJSON)).to.throw Error
+
+
+    describe "result of call w/o second argument", () ->
+
+      it "should evaluate given pointer on previously passed document", () ->
+        target =
+          foo: "bar"
+        targetAsString = JSON.stringify target
+        evaluate = jsonpointer.get targetAsString
+        expectedResults =
+          "/foo": target.foo
+          "/baz": undefined
+
+        check = (pointer, expected) ->
+          expect(evaluate pointer).to.be.deep.equal expected
+        check(pointer, expected) for pointer, expected of expectedResults
+
+
     describe "pointer validation", () ->
       target =
         foo: "bar"
