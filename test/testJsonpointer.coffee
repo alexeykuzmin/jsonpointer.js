@@ -8,7 +8,7 @@ expect = chai.expect
 
 describe "jsonpointer", () ->
 
-  describe "#get", () ->
+  describe ".get()", () ->
 
     it "should evaluate spec examples", () ->
       target =
