@@ -62,6 +62,11 @@ jsonpointer.get(targetJSON, "/~1");  // 'slash'
 jsonpointer.get(targetJSON, "/baz");  // [true, false]
 jsonpointer.get(targetJSON, "/baz/0");  // true
 jsonpointer.get(targetJSON, "/baz/2");  // undefined
+
+// Second argument might be omitted, in such case `.get()` returns a function
+// that takes pointer as argument and evaluates it.
+var evaluate = jsonpointer.get(targetJSON);
+evaluate("/foo/bar");  // "foobar"
 ```
 
 There are several cases when `.get()` throws an exception:
