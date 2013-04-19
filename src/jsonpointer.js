@@ -66,28 +66,24 @@
 
 
   /**
-   * Returns |target| object's value pointed by |pointer|, returns undefined
-   * if |pointer| points to non-existing value.
+   * Returns |target| object's value pointed by |opt_pointer|, returns undefined
+   * if |opt_pointer| points to non-existing value.
+   * If pointer is not provided, validates first argument and returns
+   * evaluator function that takes pointer as argument.
    * @param {!string} target JSON document.
-   * @param {!string} pointer JSON Pointer string.
+   * @param {string=} opt_pointer JSON Pointer string.
    * @returns {*} Some value.
    */
-  function getPointedValue(target, pointer) {
+  function getPointedValue(target, opt_pointer) {
     // .get() method implementation.
 
-    // Let's check type of first argument, it must be a string.
+    // First argument must be a string.
     if (!isString(target)) {
       // If it's not a string, an exception will be thrown.
       throw getError(ErrorMessage.INVALID_DOCUMENT_TYPE);
     }
 
-    // Second argument must a valid JSON pointer string.
-    if (!isValidJSONPointer(pointer)) {
-      // If it's not, an exception will be thrown.
-      throw getError(ErrorMessage.INVALID_POINTER);
-    }
-
-    // Last check. Target document must be valid JSON document.
+    // And also it must be valid JSON document.
     try {
       // Let's try to parse it as JSON.
       target = JSON.parse(target);
@@ -97,22 +93,53 @@
       throw getError(ErrorMessage.INVALID_DOCUMENT);
     }
 
-    // Now, when all arguments are valid, we can start evaluation.
-    // First of all, let's convert JSON pointer string to tokens list.
-    var tokensList = parsePointer(pointer);
-    var token;
-    var value = target;
+    // |target| is already parsed, let's create evaluator function for it.
+    var evaluator = createPointerEvaluator(target);
 
-    // Evaluation will be continued till tokens list is not empty
-    // and returned value is not an undefined.
-    while (!isUndefined(value) && !isUndefined(token = tokensList.pop())) {
-      // Let's evaluate token in current context.
-      // `getValue()` might throw an exception, but we won't handle it.
-      value = getValue(value, token);
+    if (isUndefined(opt_pointer)) {
+      // If pointer was not provided, return evaluator function.
+      return evaluator;
     }
+    else {
+      // If pointer is provided, return evaluation result.
+      return evaluator(opt_pointer);
+    }
+  }
 
-    // Pointer evaluation is done, return resulting value.
-    return value;
+
+  /**
+   * Returns function that takes JSON Pointer as single argument
+   * and evaluates it in given |target| context.
+   * Returned function throws an exception if pointer is not valid
+   * or any error occurs during evaluation.
+   * @param {*} target Evaluation target.
+   * @returns {Function}
+   */
+  function createPointerEvaluator(target) {
+    return function(pointer) {
+
+      if (!isValidJSONPointer(pointer)) {
+        // If it's not, an exception will be thrown.
+        throw getError(ErrorMessage.INVALID_POINTER);
+      }
+
+      // Now, when all arguments are valid, we can start evaluation.
+      // First of all, let's convert JSON pointer string to tokens list.
+      var tokensList = parsePointer(pointer);
+      var token;
+      var value = target;
+
+      // Evaluation will be continued till tokens list is not empty
+      // and returned value is not an undefined.
+      while (!isUndefined(value) && !isUndefined(token = tokensList.pop())) {
+        // Let's evaluate token in current context.
+        // `getValue()` might throw an exception, but we won't handle it.
+        value = getValue(value, token);
+      }
+
+      // Pointer evaluation is done, return resulting value.
+      return value;
+    };
   }
 
 
