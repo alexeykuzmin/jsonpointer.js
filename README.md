@@ -64,7 +64,7 @@ jsonpointer.get(targetJSON, "/baz/0");  // true
 jsonpointer.get(targetJSON, "/baz/2");  // undefined
 ```
 
-`jsonpointer#get` throws an exception in following cases:
+There are several cases when `.get()` throws an exception:
 
  - First argument is not valid JSON string.
  - Seconds argument is not valid JSON Pointer string.
