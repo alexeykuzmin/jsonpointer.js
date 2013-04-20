@@ -116,11 +116,21 @@
    * @returns {Function}
    */
   function createPointerEvaluator(target) {
+
+    // Use cache to store already received values.
+    var cache = {};
+
     return function(pointer) {
 
       if (!isValidJSONPointer(pointer)) {
         // If it's not, an exception will be thrown.
         throw getError(ErrorMessage.INVALID_POINTER);
+      }
+
+      // First, look up in the cache.
+      if (cache.hasOwnProperty(pointer)) {
+        // If cache entry exists, return it's value.
+        return cache[pointer];
       }
 
       // Now, when all arguments are valid, we can start evaluation.
@@ -137,7 +147,8 @@
         value = getValue(value, token);
       }
 
-      // Pointer evaluation is done, return resulting value.
+      // Pointer evaluation is done, save value in the cache and return it.
+      cache[pointer] = value;
       return value;
     };
   }
