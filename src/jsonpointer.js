@@ -202,9 +202,8 @@
     var escapeSequence;
     var replaceRegExp;
 
-    // Escape sequences have to be unescaped in specific order,
-    // that's why I have used array, although hash seems more suitable
-    // at first glance.
+    // Order of unescaping does matter.
+    // That's why an array is used here and not hash.
     SPECIAL_CHARACTERS.forEach(function(pair) {
       character = pair[0];
       escapeSequence = pair[1];
