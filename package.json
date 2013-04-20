@@ -34,7 +34,7 @@
   },
   "dependencies": {},
   "keywords": [
-    "json-pointer",
+    "jsonpointer",
     "json"
   ],
   "license": "MIT"
