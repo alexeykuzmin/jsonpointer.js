@@ -1,6 +1,8 @@
 # JavaScript JSON Pointer
 
 [![Build Status](https://travis-ci.org/alexeykuzmin/jsonpointer.js.png)](https://travis-ci.org/alexeykuzmin/jsonpointer.js)
+[![Dependency Status](https://gemnasium.com/alexeykuzmin/jsonpointer.js.png)](https://gemnasium.com/alexeykuzmin/jsonpointer.js)
+[![NPM Version](https://badge.fury.io/js/jsonpointer.js.png)](https://npmjs.org/package/jsonpointer.js)
 
 JavaScript implementation of JSON Pointer ([RFC 6901](http://tools.ietf.org/html/rfc6901)).  
 Can be used as Node.js package, AMD module or a plain script.
