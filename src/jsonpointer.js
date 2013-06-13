@@ -56,7 +56,7 @@
     HYPHEN_IS_NOT_SUPPORTED_IN_ARRAY_CONTEXT:
         'Implementation does not support "-" token for arrays.',
     INVALID_DOCUMENT: 'JSON document is not valid.',
-    INVALID_DOCUMENT_TYPE: 'JSON document must be a string.',
+    INVALID_DOCUMENT_TYPE: 'JSON document must be a string or object.',
     INVALID_POINTER: 'Pointer is not valid.',
     NON_NUMBER_TOKEN_IN_ARRAY_CONTEXT:
         'Non-number tokens cannot be used in array context.',
@@ -70,27 +70,35 @@
    * if |opt_pointer| points to non-existing value.
    * If pointer is not provided, validates first argument and returns
    * evaluator function that takes pointer as argument.
-   * @param {!string} target JSON document.
+   * @param {string | object} target JSON document.
    * @param {string=} opt_pointer JSON Pointer string.
    * @returns {*} Some value.
    */
   function getPointedValue(target, opt_pointer) {
     // .get() method implementation.
 
-    // First argument must be a string.
-    if (!isString(target)) {
-      // If it's not a string, an exception will be thrown.
-      throw getError(ErrorMessage.INVALID_DOCUMENT_TYPE);
-    }
+    // First argument must be either string or object.
+    if (isString(target)) {
 
-    // And also it must be valid JSON document.
-    try {
-      // Let's try to parse it as JSON.
-      target = JSON.parse(target);
+      // If string it must be valid JSON document.
+      try {
+        // Let's try to parse it as JSON.
+        target = JSON.parse(target);
+      }
+      catch (e) {
+        // If parsing failed, an exception will be thrown.
+        throw getError(ErrorMessage.INVALID_DOCUMENT);
+      }
     }
-    catch (e) {
-      // If parsing failed, an exception will be thrown.
-      throw getError(ErrorMessage.INVALID_DOCUMENT);
+    else if (isObject(target)) {
+      if (isArray(target)) {
+        // If array, an exception will be thrown.
+        throw getError(ErrorMessage.INVALID_DOCUMENT_TYPE);
+      }
+    }
+    else {
+      // If not object or string, an exception will be thrown.
+      throw getError(ErrorMessage.INVALID_DOCUMENT_TYPE);
     }
 
     // |target| is already parsed, let's create evaluator function for it.
