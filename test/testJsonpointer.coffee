@@ -55,6 +55,24 @@ describe "jsonpointer", () ->
 
       check(expression, expected) for expression, expected of specExamples
 
+    it "should evaluate on array target", () ->
+
+      target = [
+        { foo: "bar", baz: [1, 2, 3]}
+        { foo: "foobar" }
+      ]
+
+      expressions =
+        "/0/foo" : "bar"
+        "/0/baz/1" : 2
+        "/1":  {foo: "foobar"}
+
+      check = (expression, expected) ->
+        actual = jsonpointer.get target, expression
+        actual.should.be.deep.equal expected
+
+      check(expression, expected) for expression, expected of expressions
+
 
     it "should return undefined if value is not found", () ->
       target =
@@ -68,7 +86,7 @@ describe "jsonpointer", () ->
 
 
     it "should throw an error if target is not object or valid JSON document string", () ->
-      invalidTargets = [null, "", [], false, "{{{", "invalid", 1, "{o}"]
+      invalidTargets = [null, "", false, "{{{", "invalid", 1, "{o}"]
       pointer = ""
 
       evaluate = (target) -> () -> jsonpointer.get target, pointer

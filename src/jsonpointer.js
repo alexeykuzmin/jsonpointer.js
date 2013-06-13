@@ -90,13 +90,7 @@
         throw getError(ErrorMessage.INVALID_DOCUMENT);
       }
     }
-    else if (isObject(target)) {
-      if (isArray(target)) {
-        // If array, an exception will be thrown.
-        throw getError(ErrorMessage.INVALID_DOCUMENT_TYPE);
-      }
-    }
-    else {
+    else if (!isObject(target)) {
       // If not object or string, an exception will be thrown.
       throw getError(ErrorMessage.INVALID_DOCUMENT_TYPE);
     }
