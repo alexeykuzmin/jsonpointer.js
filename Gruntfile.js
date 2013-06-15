@@ -24,6 +24,9 @@ module.exports = function(grunt) {
       options: {
         'no_trailing_whitespace': {
           'level': 'error'
+        },
+        'max_line_length': {
+          'level': 'warn'
         }
       },
 

@@ -43,10 +43,12 @@ require('jsonpointer', function(jsonpointer) {
 </script>
 ```
 
-## Methods
+## API
 ### jsonpointer.get
+
+`get()` accepts strings, objects and arrays as evaluation target.
 ```js
-var targetJSON = JSON.stringify({
+var target = {
   foo: {
     bar: 'foobar'
   },
@@ -55,25 +57,29 @@ var targetJSON = JSON.stringify({
   '/': 'slash'
 });
 
-// Please note that first argument of `.get()` method must be a string.
-jsonpointer.get(targetJSON, '/foo');  // {bar: 'foobar'}
-jsonpointer.get(targetJSON, '/foo/bar');  // 'foobar'
-jsonpointer.get(targetJSON, '/some/nonexisting/path');  // undefined
-jsonpointer.get(targetJSON, '/~0');  // 'tilde'
+var targetJSON = JSON.stringify(target);
+
+jsonpointer.get(target, '/foo');  // {bar: 'foobar'}
+jsonpointer.get(target, '/foo/bar');  // 'foobar'
+jsonpointer.get(target, '/some/nonexisting/path');  // undefined
+jsonpointer.get(target, '/~0');  // 'tilde'
 jsonpointer.get(targetJSON, '/~1');  // 'slash'
 jsonpointer.get(targetJSON, '/baz');  // [true, false]
 jsonpointer.get(targetJSON, '/baz/0');  // true
 jsonpointer.get(targetJSON, '/baz/2');  // undefined
+```
 
-// Second argument might be omitted, in such case `.get()` returns a function
-// that takes pointer as argument and evaluates it.
-var evaluate = jsonpointer.get(targetJSON);
+Second argument might be omitted, in such case `get()` returns a function
+that takes pointer as argument and evaluates it.
+```js
+var evaluate = jsonpointer.get(target);
 evaluate('/foo/bar');  // 'foobar'
 ```
 
 There are several cases when `.get()` throws an exception:
 
- - First argument is not valid JSON string.
+ - First argument is not string, object or array.
+ - First argument is string but is not valid JSON string.
  - Seconds argument is not valid JSON Pointer string.
  - Unacceptable token met during evaluation (check [section 4 of spec](http://tools.ietf.org/html/rfc6901#section-4) for examples).
- - '-' token used in JSON Pointer string and it`s going to be evaluated in Array context.
+ - `'-'` token used in JSON Pointer string and it's going to be evaluated in `Array` context.
