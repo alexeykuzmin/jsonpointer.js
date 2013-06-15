@@ -10,7 +10,7 @@ module.exports = function(grunt) {
   grunt.initConfig({
 
     coffee: {
-      test: {
+      tests: {
         expand: true,
         cwd: 'test',
         src: ['*.coffee'],
@@ -30,7 +30,7 @@ module.exports = function(grunt) {
         }
       },
 
-      test: ['test/test*.coffee']
+      tests: ['test/test*.coffee']
     },
 
 
@@ -46,21 +46,34 @@ module.exports = function(grunt) {
 
     simplemocha: {
       options: {
+        compilers: {
+          coffee: 'coffee-script'
+        },
         ignoreLeaks: false,
         ui: 'bdd',
         reporter: 'spec'
       },
 
-      test: {
-        src: 'test/test*.js'
+      tests: {
+        src: 'test/test*'
       }
     }
   });
 
 
-  grunt.registerTask('check_codestyle', ['jshint', 'coffeelint']);
-  grunt.registerTask('run_tests', ['coffee', 'simplemocha']);
-  grunt.registerTask('test', ['check_codestyle', 'run_tests']);
-  grunt.registerTask('default', 'test');
+  var metaTasks = {
+    'check-code': ['codestyle', 'tests'],
+    'codestyle': ['jshint', 'coffeelint'],
+    compile: 'coffee',
+    'default': 'check-code',
+    tests: ['simplemocha']
+  };
+
+  for (var name in metaTasks) {
+    if (metaTasks.hasOwnProperty(name)) {
+      var tasksList = metaTasks[name];
+      grunt.registerTask(name, tasksList);
+    }
+  }
 
 };
