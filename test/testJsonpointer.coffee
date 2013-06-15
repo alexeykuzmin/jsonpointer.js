@@ -10,40 +10,69 @@ describe "jsonpointer", () ->
 
   describe ".get()", () ->
 
-    it "should evaluate spec examples", () ->
-      target =
-        "foo": ["bar", "baz"]
-        "": 0
-        "a/b": 1,
-        "c%d": 2,
-        "e^f": 3,
-        "g|h": 4,
-        "i\\j": 5,
-        "k\"l": 6,
-        " ": 7,
-        "m~n": 8
+    input =
+      "foo": ["bar", "baz"]
+      "": 0
+      "a/b": 1,
+      "c%d": 2,
+      "e^f": 3,
+      "g|h": 4,
+      "i\\j": 5,
+      "k\"l": 6,
+      " ": 7,
+      "m~n": 8
 
-      targetAsString = JSON.stringify target
+    specExamples =
+      "": input
+      "/foo": ["bar", "baz"],
+      "/foo/0": "bar",
+      "/": 0,
+      "/a~1b": 1,
+      "/c%d": 2,
+      "/e^f": 3,
+      "/g|h": 4,
+      "/i\\j": 5,
+      "/k\"l": 6,
+      "/ ": 7,
+      "/m~0n": 8
 
-      specExamples =
-        "": target
-        "/foo": ["bar", "baz"],
-        "/foo/0": "bar",
-        "/": 0,
-        "/a~1b": 1,
-        "/c%d": 2,
-        "/e^f": 3,
-        "/g|h": 4,
-        "/i\\j": 5,
-        "/k\"l": 6,
-        "/ ": 7,
-        "/m~0n": 8
+
+    it "should evaluate spec examples on string target", () ->
+      targetAsString = JSON.stringify input
 
       check = (expression, expected) ->
         actual = jsonpointer.get targetAsString, expression
         actual.should.be.deep.equal expected
 
       check(expression, expected) for expression, expected of specExamples
+
+
+    it "should evaluate spec examples on object target", () ->
+
+      check = (expression, expected) ->
+        actual = jsonpointer.get input, expression
+        actual.should.be.deep.equal expected
+
+      check(expression, expected) for expression, expected of specExamples
+
+    it "should evaluate on array target", () ->
+
+      target = [
+        { foo: "bar", baz: [1, 2, 3] }
+        foo: "foobar"
+      ]
+
+      expressions =
+        "/0/foo" : "bar"
+        "/0/baz/1" : 2
+        "/1":
+          foo: "foobar"
+
+      check = (expression, expected) ->
+        actual = jsonpointer.get target, expression
+        actual.should.be.deep.equal expected
+
+      check(expression, expected) for expression, expected of expressions
 
 
     it "should return undefined if value is not found", () ->
@@ -57,8 +86,8 @@ describe "jsonpointer", () ->
       expect(evaluate(p)).to.be.undefined for p in pointers
 
 
-    it "should throw an error if target is not valid JSON document", () ->
-      invalidTargets = [null, "", [], {}, "invalid", 1, "{o}"]
+    it "should throw an error if target is not object or valid JSON document string", () ->
+      invalidTargets = [null, "", false, "{{{", "invalid", 1, "{o}"]
       pointer = ""
 
       evaluate = (target) -> () -> jsonpointer.get target, pointer
@@ -67,14 +96,14 @@ describe "jsonpointer", () ->
 
     describe "call w/o second argument", () ->
 
-      it "should return function if first argument is valid JSON", () ->
+      it "should return function if first argument is valid", () ->
         validJSON = "null"
 
         actual = jsonpointer.get validJSON
         actual.should.to.be.a "function"
 
 
-      it "should throw an exception if first argument is not JSON", () ->
+      it "should throw an exception if first argument is not valid", () ->
         invalidJSON = "invalid"
         curryGet = (json) -> () -> jsonpointer.get json
 
