@@ -70,7 +70,7 @@
    * if |opt_pointer| points to non-existing value.
    * If pointer is not provided, validates first argument and returns
    * evaluator function that takes pointer as argument.
-   * @param {string | object} target JSON document.
+   * @param {(string|Object|Array)} target Evaluation target.
    * @param {string=} opt_pointer JSON Pointer string.
    * @returns {*} Some value.
    */

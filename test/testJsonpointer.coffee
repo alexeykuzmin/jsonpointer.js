@@ -58,14 +58,15 @@ describe "jsonpointer", () ->
     it "should evaluate on array target", () ->
 
       target = [
-        { foo: "bar", baz: [1, 2, 3]}
-        { foo: "foobar" }
+        { foo: "bar", baz: [1, 2, 3] }
+        foo: "foobar"
       ]
 
       expressions =
         "/0/foo" : "bar"
         "/0/baz/1" : 2
-        "/1":  {foo: "foobar"}
+        "/1":
+          foo: "foobar"
 
       check = (expression, expected) ->
         actual = jsonpointer.get target, expression
@@ -95,14 +96,14 @@ describe "jsonpointer", () ->
 
     describe "call w/o second argument", () ->
 
-      it "should return function if first argument is valid JSON", () ->
+      it "should return function if first argument is valid", () ->
         validJSON = "null"
 
         actual = jsonpointer.get validJSON
         actual.should.to.be.a "function"
 
 
-      it "should throw an exception if first argument is not JSON", () ->
+      it "should throw an exception if first argument is not valid", () ->
         invalidJSON = "invalid"
         curryGet = (json) -> () -> jsonpointer.get json
 
