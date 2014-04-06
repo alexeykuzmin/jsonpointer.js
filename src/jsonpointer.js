@@ -108,6 +108,41 @@
     }
   }
 
+  function setPointedValue(target, opt_pointer, opt_value) {
+    // .set() method implementation.
+
+    // First argument must be either string or object.
+    if (isString(target)) {
+
+      // If string it must be valid JSON document.
+      try {
+        // Let's try to parse it as JSON.
+        target = JSON.parse(target);
+      }
+      catch (e) {
+        // If parsing failed, an exception will be thrown.
+        throw getError(ErrorMessage.INVALID_DOCUMENT);
+      }
+    }
+    else if (!isObject(target)) {
+      // If not object or string, an exception will be thrown.
+      throw getError(ErrorMessage.INVALID_DOCUMENT_TYPE);
+    }
+
+    // |target| is already parsed, let's create evaluator function for it.
+    var setter = createPointerSetter(target);
+
+    if (isUndefined(opt_pointer)) {
+      // If pointer was not provided, return evaluator function.
+      return setter;
+    }
+    else if (isUndefined(opt_value) ) {
+      return setter(opt_pointer);
+    } else {
+      // If pointer is provided, return evaluation result.
+      return setter(opt_pointer, opt_value);
+    }
+  }
 
   /**
    * Returns function that takes JSON Pointer as single argument
@@ -152,6 +187,55 @@
       // Pointer evaluation is done, save value in the cache and return it.
       cache[pointer] = value;
       return value;
+    };
+  }
+
+  function createPointerSetter(target) {
+    return function(pointer, opt_targetvalue) {
+
+      if( pointer === '' ) {
+        // Cannot directly assign to root
+        throw getError(ErrorMessage.INVALID_POINTER);
+      }
+      if (!isValidJSONPointer(pointer)) {
+        // If it's not, an exception will be thrown.
+        throw getError(ErrorMessage.INVALID_POINTER);
+      }
+
+      // Now, when all arguments are valid, we can start evaluation.
+      // First of all, let's convert JSON pointer string to tokens list.
+      var tokensList = parsePointer(pointer);
+      var token;
+      var value = target;
+
+      // Stop one level before 
+      var targetkey = tokensList.splice(0, 1)[0];
+
+      // Evaluation until last object
+      while (!isUndefined(value) && !isUndefined(token = tokensList.pop())) {
+        // Let's evaluate token in current context.
+        // `getValue()` might throw an exception, but we won't handle it.
+        value = getValue(value, token);
+      }
+
+      // Retrieve last key to enforce full validation of pointer
+      var oldvalue = getValue(value, targetkey);
+    
+      if( isObject(value) ) {
+        // Pointer evaluation is done, save value to the object and return it.
+
+        // If no targetvalue is provided, return function
+        if( arguments.length == 1 ) {
+          return function(target_value) {
+            value[targetkey] = target_value;
+          };
+        } else {
+          value[targetkey] = opt_targetvalue
+          return opt_targetvalue;
+        }
+      } else {
+        throw setError(ErrorMessage.INVALID_POINTER);
+      }
     };
   }
 
@@ -289,6 +373,10 @@
     return new Error(ERROR_MESSAGE_PREFIX + message);
   }
 
+  function setError(message) {
+    return new Error(ERROR_MESSAGE_PREFIX + message); 
+  }
+
 
   function isObject(o) {
     return 'object' === typeof o && null !== o;
@@ -318,7 +406,8 @@
   // Let's expose API to the world.
 
   var jsonpointer = {
-    get: getPointedValue
+    get: getPointedValue,
+    set: setPointedValue
   };
 
   if ('object' === typeof exports) {
