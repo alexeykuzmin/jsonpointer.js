@@ -345,5 +345,5 @@
 
 }).call((function() {
   'use strict';
-  return (typeof window !== 'undefined' ? window : global);
+  return (typeof window !== 'undefined' ? window : this);
 })());
