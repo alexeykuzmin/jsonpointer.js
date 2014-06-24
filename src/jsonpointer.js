@@ -213,16 +213,18 @@
     var referenceToken = rawReferenceToken;
     var character;
     var escapeSequence;
+    var pair;
     var replaceRegExp;
 
     // Order of unescaping does matter.
     // That's why an array is used here and not hash.
-    SPECIAL_CHARACTERS.forEach(function(pair) {
+    for (var i = 0; i < SPECIAL_CHARACTERS.length; i++) {
+      pair = SPECIAL_CHARACTERS[i];
       character = pair[0];
       escapeSequence = pair[1];
       replaceRegExp = new RegExp(escapeSequence, 'g');
       referenceToken = referenceToken.replace(replaceRegExp, character);
-    });
+    }
 
     return referenceToken;
   }
@@ -296,7 +298,11 @@
 
 
   function isArray(a) {
-    return Array.isArray(a);
+    if (Array.isArray) {
+      return Array.isArray(a);
+    } else {
+      return Object.prototype.toString.call(a) === '[object Array]';
+    }
   }
 
 
@@ -339,5 +345,5 @@
 
 }).call((function() {
   'use strict';
-  return (typeof window !== 'undefined' ? window : global);
+  return (typeof window !== 'undefined' ? window : this);
 })());
