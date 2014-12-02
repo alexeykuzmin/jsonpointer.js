@@ -225,12 +225,12 @@
         // Pointer evaluation is done, save value to the object and return it.
 
         // If no targetvalue is provided, return function
-        if( arguments.length == 1 ) {
+        if( arguments.length === 1 ) {
           return function(target_value) {
             value[targetkey] = target_value;
           };
         } else {
-          value[targetkey] = opt_targetvalue
+          value[targetkey] = opt_targetvalue;
           return opt_targetvalue;
         }
       } else {
