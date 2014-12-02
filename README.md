@@ -24,7 +24,7 @@ or copy `src/jsonpointer.js` file from repo.
 ## Include
 ###Node.js
 ```js
-var jsonpoiner = require('jsonpointer.js');  // XXX: '.js' is part of package name!
+var jsonpointer = require('jsonpointer.js');  // XXX: '.js' is part of package name!
 console.log(typeof jsonpointer);  // 'object'
 ```
 
