@@ -220,7 +220,7 @@
 
       // Retrieve last key to enforce full validation of pointer
       var oldvalue = getValue(value, targetkey);
-    
+
       if( isObject(value) ) {
         // Pointer evaluation is done, save value to the object and return it.
 
@@ -374,7 +374,7 @@
   }
 
   function setError(message) {
-    return new Error(ERROR_MESSAGE_PREFIX + message); 
+    return new Error(ERROR_MESSAGE_PREFIX + message);
   }
 
 
