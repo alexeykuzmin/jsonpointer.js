@@ -1,9 +1,9 @@
-.npmignore
 .gitignore
-.travis.yml
 .jshintrc
-component.json
+.npmignore
+.travis.yml
+bower.json
 Gruntfile.js
 
 node_modules
-test/
+test
