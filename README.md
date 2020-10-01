@@ -14,7 +14,7 @@ via [npm](https://npmjs.org/):
 
     $ npm install jsonpointer.js
     
-via [Bower](http://twitter.github.io/bower/):
+via [Bower](https://bower.io/):
 
     $ bower install jsonpointer.js
     
